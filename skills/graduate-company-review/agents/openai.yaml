@@ -1,4 +1,4 @@
 interface:
-  display_name: "??????"
-  short_description: "?????????????????????????? Word ???"
+  display_name: "校招公司评判"
+  short_description: "评估公司是否适合应届生投递或入职，并自动导出正式中文 Word 报告。"
   default_prompt: "Use $graduate-company-review to assess whether this company is worth applying to for a new graduate, return the evaluation in Chinese, and automatically export a formal Chinese Word report."
