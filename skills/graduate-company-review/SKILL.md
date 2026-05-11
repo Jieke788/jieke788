@@ -1,6 +1,6 @@
 ---
 name: graduate-company-review
-description: Evaluate whether a company is worth applying to or joining for a new graduate in China. Use when Codex needs to judge a company's business, role fit, salary signals, city differences, hiring friendliness, growth prospects, and work-risk factors for entry-level candidates, return a Chinese recommendation with evidence, confidence, and a final verdict such as ??, ??, or ???, and automatically export the assessment as a formal Chinese Word report (.docx).
+description: Evaluate whether a company is worth applying to or joining for a new graduate in China. Use when Codex needs to judge a company's business, role fit, salary signals, city differences, hiring friendliness, growth prospects, and work-risk factors for entry-level candidates, return a Chinese recommendation with evidence, confidence, and a final verdict such as 适合, 谨慎, or 不推荐, and automatically export the assessment as a formal Chinese Word report (.docx).
 ---
 
 # Graduate Company Evaluator
@@ -16,7 +16,7 @@ Infer the target from the user's request when possible. Collect these inputs if 
 - company name
 - target city
 - target role or role family
-- graduate background, such as major, internship direction, or whether the user is deciding between offer acceptance and??
+- graduate background, such as major, internship direction, or whether the user is deciding between offer acceptance and投递
 
 If part of the target is missing, proceed with a reasonable default and state the assumption in one line.
 
@@ -26,7 +26,7 @@ Company condition, salary, and hiring signals are time-sensitive. Always verify 
 
 Gather evidence in this order:
 
-1. ?? or similar company profile source when available
+1. 风鸟 or similar company profile source when available
 2. company official site, careers page, and campus recruitment page
 3. major job platforms and public salary samples
 4. reputable news, encyclopedia, or industry materials
@@ -80,7 +80,7 @@ The final answer in chat should always be in Chinese and should always include:
 - strengths
 - risks
 - scorecard
-- final verdict: `??` / `??` / `???`
+- final verdict: `适合` / `谨慎` / `不推荐`
 - sources
 - confidence note
 
@@ -118,7 +118,36 @@ If the company name is Chinese or contains characters that are awkward in filena
 Read [references/word-report.md](references/word-report.md) before generating a Word file.
 Use [scripts/generate_company_report.py](scripts/generate_company_report.py) as the default generator instead of rewriting document code each time.
 
-### 7. End with an actionable suggestion
+### 7. Terminal and deployment commands
+
+Use the following commands when you need to deploy the skill into another environment.
+
+#### Deploy to a local terminal workspace
+
+```powershell
+git clone https://github.com/Jieke788/jieke788.git
+cd jieke788
+Get-ChildItem .\skills\graduate-company-review
+```
+
+#### Deploy to Codex
+
+```powershell
+git clone https://github.com/Jieke788/jieke788.git "$env:TEMP\jieke788"
+Remove-Item -Recurse -Force "$env:USERPROFILE\.codex\skills\graduate-company-review" -ErrorAction SilentlyContinue
+Copy-Item -Recurse -Force "$env:TEMP\jieke788\skills\graduate-company-review" "$env:USERPROFILE\.codex\skills\graduate-company-review"
+```
+
+#### Deploy to CC
+
+```powershell
+git clone https://github.com/Jieke788/jieke788.git "$env:TEMP\jieke788"
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\projects\skills" | Out-Null
+Remove-Item -Recurse -Force "$env:USERPROFILE\.claude\projects\skills\graduate-company-review" -ErrorAction SilentlyContinue
+Copy-Item -Recurse -Force "$env:TEMP\jieke788\skills\graduate-company-review" "$env:USERPROFILE\.claude\projects\skills\graduate-company-review"
+```
+
+### 8. End with an actionable suggestion
 
 Close the chat response with the most practical next action for a graduate, such as:
 
@@ -132,8 +161,8 @@ Close the chat response with the most practical next action for a graduate, such
 - Keep the answer structured and concise.
 - Prefer explicit uncertainty over overconfident wording.
 - Do not use a single employee post or forum thread as a factual basis.
-- If sources conflict, say `????` and explain where the conflict appears.
-- If salary samples are sparse, say `????` and provide only a cautious range or directional judgment.
+- If sources conflict, say `存在分歧` and explain where the conflict appears.
+- If salary samples are sparse, say `样本不足` and provide only a cautious range or directional judgment.
 - If the company is small, obscure, or newly formed, reduce confidence and avoid strong conclusions.
 - Put major risk signals before minor advantages when the downside is material.
 - When exporting Word, keep Chinese text in a UTF-8 script file and avoid inline terminal piping for non-ASCII content.

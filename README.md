@@ -31,6 +31,33 @@ Example:
 用 $graduate-company-review 评估深圳某公司
 ```
 
+## Deployment
+
+### Deploy to a local terminal workspace
+
+```powershell
+git clone https://github.com/Jieke788/jieke788.git
+cd jieke788
+Get-ChildItem .\skills\graduate-company-review
+```
+
+### Deploy to Codex
+
+```powershell
+git clone https://github.com/Jieke788/jieke788.git "$env:TEMP\jieke788"
+Remove-Item -Recurse -Force "$env:USERPROFILE\.codex\skills\graduate-company-review" -ErrorAction SilentlyContinue
+Copy-Item -Recurse -Force "$env:TEMP\jieke788\skills\graduate-company-review" "$env:USERPROFILE\.codex\skills\graduate-company-review"
+```
+
+### Deploy to CC
+
+```powershell
+git clone https://github.com/Jieke788/jieke788.git "$env:TEMP\jieke788"
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\projects\skills" | Out-Null
+Remove-Item -Recurse -Force "$env:USERPROFILE\.claude\projects\skills\graduate-company-review" -ErrorAction SilentlyContinue
+Copy-Item -Recurse -Force "$env:TEMP\jieke788\skills\graduate-company-review" "$env:USERPROFILE\.claude\projects\skills\graduate-company-review"
+```
+
 ## Output behavior
 
 By default, the skill will:
